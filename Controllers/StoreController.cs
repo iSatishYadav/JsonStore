@@ -38,6 +38,8 @@ namespace JsonStore.Controllers
         public IActionResult Get(int id)
         {
             string jsonString = GetStore(id);
+            if (string.IsNullOrEmpty(jsonString))
+                return NotFound();
             return Ok(jsonString);
         }
 
@@ -72,7 +74,7 @@ namespace JsonStore.Controllers
             using var reader = cmd.ExecuteReader();
             if (!reader.HasRows)
             {
-                jsonResult.Append("[]");
+                return null;
             }
             else
             {
