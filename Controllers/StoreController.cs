@@ -19,12 +19,10 @@ namespace JsonStore.Controllers
     [Route("[controller]")]
     public class StoreController : ControllerBase
     {
-        private readonly ILogger<StoreController> _logger;
         private readonly StoreContext _context;
 
-        public StoreController(ILogger<StoreController> logger, StoreContext storeContext)
+        public StoreController(StoreContext storeContext)
         {
-            _logger = logger;
             _context = storeContext;
         }
 
@@ -63,7 +61,7 @@ namespace JsonStore.Controllers
             using var cmd = new SqlCommand("dbo.GetAllStores", connection)
             {
                 CommandType = CommandType.StoredProcedure
-            };            
+            };
             var jsonString = ReadJsonFromReader(cmd);
             return jsonString;
         }
